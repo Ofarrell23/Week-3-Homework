@@ -14,67 +14,65 @@ function writePassword() {
 
 }
 
-var enter;
-var confirmNumber;
-var confirmCharacter;
-var confirmUppercase;
-var confirmLowercase;
+//user variables
 
-var lowercaseChar = "abcdefghijklmnop";
-var uppercaseChar = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-var numericalChar = "1234567890"
-var specialChar = "!@#$%^&*()_+"
-var charType = 0;
-var assembly = "";
-var passwordText = "";
-var alphaLength = 25
-var tryAgain = false;
-var lowChoice = true;
+var lower = 'abcdefghijklmnopqrstuvwxyz';
+var upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+var special = '!@#$^&%*()+=-[]{}|:<>?,.';
+var numbers = '1234567890';
+var pwd = '';
+var lowerCaseChar = false;
+var upperCaseChar = false;
+var specialCaseChar= false;
+var numberCaseChar = false;
 
-var get = document.querySelector("#generate");
+//generating random function
 
-get.addEventListener("click", function () {
-    ps = generatePassword();
-    document.getElementById("password").placeholder = ps;
-});
+function generate() {
+    var confirmLength = '';
+//desired character length
+    while (isNaN(confirmLength) || confirmLength < 8 || confirmLength > 128) {
+        confirmLength = prompt("Make sure your User length is Correct (Between 8 to 128 characters)");
+        if (confirmLength === null) {
+            break;
+        }
+    }
+//user imput
 
-function generatePassword() {
+    if (confirmLength) {
+        if (confirm("Would you like to use lowercase characters?") == true) {
+            lowerCaseChar = true
+        } 
+        if (confirm("Would you like to use uppercase characters?") == true) {
+            upperCaseChar = true
+        }
+        if (confirm("Would you like to use special characters?") == true) {
+            specialCaseChar = true
+        }
+        if (confirm("Would you like to use numerical characters?") == true) {
+            numberCaseChar = true
+        }
+        if (lowerCaseChar === false && upperChar === false && specialChar === false && numberChar === false) {
+            alert("At least one character type must be selected")
+        }
+    }
+//generate random password
+    var characters = '';
+    characters += (lowerCaseChar ? lower : '');
+    characters += (upperCaseChar ? upper : '');
+    characters += (specialCaseChar ? special : '');
+    characters += (numberCaseChar ? numbers : '');
 
-    enter = parseInt(prompt("How many characters would you like your password? Choose between 8 and 128"));
-    if (!enter) {
-        alert("This needs a value");
-    } else if (enter < 8 || enter > 128) {
-        enter = parseInt(prompt("You must choose between 8 and 128"));
+    pwd = password(confirmLength, characters);
 
-    } else {
-        confirmNumber = confirm("Will this contain numbers?");
-        confirmCharacter = confirm("Will this contain special characters?");
-        confirmUppercase = confirm("Will this contain Uppercase letters?");
-        confirmLowercase = confirm("Will this contain Lowercase letters?");
-    };
-}
-// password variable is an array placeholder for user generated amount of length
-var password = [];
+    document.getElementById("password").innerHTML = pwd;
 
-// Start random selection variables: 
-for (var i = 0; i < enter; i++) {
-    var pickChoices = choices[Math.floor(Math.random() * choices.length)];
-    password.push(pickChoices);
-}
-
-var ps = password.join("");
-UserInput(ps);
-return ps;
-
-
-function UserInput(ps) {
-    document.getElementById("password").textContent = ps;
-
-var copy = document.querySelector("#copy");
-copy.addEventListener("click", function () {
-    copyPassword()
-    
 }
 
-generateBtn.addEventListener("click", generatePassword);
+function password(l, characters) {
+    var pwd = '';
+    for (var i = 0; i < l; ++i) {
+        pwd += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return pwd;
 }
