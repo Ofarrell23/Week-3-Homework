@@ -16,11 +16,11 @@ function writePassword() {
 
 //user variables
 
-var lower = 'abcdefghijklmnopqrstuvwxyz';
-var upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-var special = '!@#$^&%*()+=-[]{}|:<>?,.';
-var numbers = '1234567890';
-var pwd = '';
+var lower = "abcdefghijklmnopqrstuvwxyz";
+var upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+var special = "!@#$%^&*()_+=?><:";
+var numbers = "1234567890";
+var pwd = "";
 var lowerCaseChar = false;
 var upperCaseChar = false;
 var specialCaseChar= false;
@@ -29,7 +29,7 @@ var numberCaseChar = false;
 //generating random function
 
 function generate() {
-    var confirmLength = '';
+    var confirmLength = "";
 //desired character length
     while (isNaN(confirmLength) || confirmLength < 8 || confirmLength > 128) {
         confirmLength = prompt("Make sure your User length is Correct (Between 8 to 128 characters)");
@@ -57,11 +57,11 @@ function generate() {
         }
     }
 //generate random password
-    var characters = '';
-    characters += (lowerCaseChar ? lower : '');
-    characters += (upperCaseChar ? upper : '');
-    characters += (specialCaseChar ? special : '');
-    characters += (numberCaseChar ? numbers : '');
+    var characters = "";
+    characters += (lowerCaseChar ? lower : "");
+    characters += (upperCaseChar ? upper : "");
+    characters += (specialCaseChar ? special : "");
+    characters += (numberCaseChar ? numbers : "");
 
     pwd = password(confirmLength, characters);
 
@@ -70,7 +70,7 @@ function generate() {
 }
 
 function password(l, characters) {
-    var pwd = '';
+    var pwd = "";
     for (var i = 0; i < l; ++i) {
         pwd += characters.charAt(Math.floor(Math.random() * characters.length));
     }
